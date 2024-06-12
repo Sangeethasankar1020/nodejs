@@ -26,7 +26,7 @@ module.exports = router;
 
 router.route("/update/user/:id").put(userController.updateUserDetails)
 
-// get widhlist user data
+// get wishlist user data
 
 router.route("/get/wishlist/product/:id").get(userController.getWishlistData)
 
