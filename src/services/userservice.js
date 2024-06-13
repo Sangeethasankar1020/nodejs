@@ -95,8 +95,31 @@ const getWishlistData=async(id)=>{
       $lookup:{
         from:"wishlists",
         localField:"_id",
-        foreignField:"userid",
+        foreignField:"userId",
         as:"wishlistData"
+      }
+    },
+
+    // get wishlist product data - lookup
+    {
+      $lookup:{
+        from:"products",
+        localField:"wishlistData.productId",
+        foreignField:"_id",
+        as:"productData"
+      }
+    },
+    {
+      $project:{
+        name:1,
+        _id: 0,
+        mobile:1,
+        email:1,
+        productData:1
+        // product_name: "$productData.productName",
+        // product_price:"$productData.price",
+        // qty:"$productData.qty"
+
       }
     }
   ]) 
