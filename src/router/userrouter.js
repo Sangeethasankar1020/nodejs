@@ -32,5 +32,5 @@ router.route("/get/wishlist/product/:id").get(userController.getWishlistData);
 
 // login route - when user login - show order , wishlist
 
-router.route("/login").post(userController.userLogin);
-module.exports=router
+router.route("/login").post(loginController.userLogin);
+module.exports = router
