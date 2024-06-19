@@ -34,3 +34,11 @@ router.route("/get/wishlist/product/:id").get(userController.getWishlistData);
 
 router.route("/login").post(loginController.userLogin);
 module.exports = router
+
+// get active users
+
+router.route("/active/users").get(userController.getActiveUsers)
+
+// get inactive users
+
+router.route("/inactive/users").get(userController.getUsersByActiveStatus)

@@ -126,11 +126,31 @@ const getWishlistData=async(id)=>{
 
   return wishlistDetails
 }
+
+// get active users 
+const getActiveUsers = async () => {
+  try {
+    const activeUsers = await registerModel.find({ active: true });
+    return activeUsers;
+  } catch (error) {
+    throw error;
+  }
+};
+// get inactive users
+const getUsersByActiveStatus = async (isActive) => {
+  try {
+    const users = await registerModel.find({ active: isActive });
+    return users;
+  } catch (error) {
+    throw error;
+  }
+};
 module.exports = {
   createUserDetails,
   getUsers,
   getSpecificUser,
   deleteUser,
   getWishlistData,
-  
+  getActiveUsers,
+  getUsersByActiveStatus 
 };

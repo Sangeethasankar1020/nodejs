@@ -40,6 +40,26 @@ const getWishlistData= async(req,res)=>{
   const wishlist= await userservice.getWishlistData(req.params.id)
   res.send(wishlist)
 }
+// get active users
+const getActiveUsers = async (req, res) => {
+  try {
+    const activeUsers = await userservice.getActiveUsers();
+    res.status(200).json(activeUsers);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+// get inactive users
+const getUsersByActiveStatus = async (req, res) => {
+  const isActive = req.params.active === 'true'; // Convert string 'true' to boolean true
+  
+  try {
+    const users = await userservice.getUsersByActiveStatus(isActive);
+    res.status(200).json(users);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
 
 module.exports = {
   createUserDetails,
@@ -48,5 +68,7 @@ module.exports = {
   deleteUser,
   updateUserDetails,
   getWishlistData,
+  getActiveUsers,
+  getUsersByActiveStatus
 };
 
