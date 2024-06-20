@@ -10,6 +10,7 @@ const productServices = require("../services/productservice")
 
 const createProductData = async (req, res) => {
   const product = await productServices.createProduct(req.body);
+  console.log(req.body)
   res.send(product);
 };
 

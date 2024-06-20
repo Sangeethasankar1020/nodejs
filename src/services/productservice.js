@@ -16,7 +16,7 @@ const createProduct = async (body) => {
     createdDate: createdDate,
   };
   // include that date with already date - with spread operator 
-
+console.log(productData)
   const product = await productModel.create(productData);
   return product;
 };
