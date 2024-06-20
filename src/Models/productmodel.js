@@ -26,6 +26,7 @@
 
 // module.exports = productModel;
 
+const moment = require("moment");
 const mongoose = require("mongoose");
 const { v4: uuidv4 } = require("uuid");
 const productSchema = new mongoose.Schema({
@@ -46,6 +47,16 @@ const productSchema = new mongoose.Schema({
   qty: {
     type: Number,
   },
+  // using moment create product with date
+  // createdDate: {
+  //   type: String,
+  //   default:moment()
+  // }
+  
+  // using date fn
+   createdDate: {
+    type: Date, default: Date.now
+  }
 });
 
 const productModel = mongoose.model("product", productSchema);

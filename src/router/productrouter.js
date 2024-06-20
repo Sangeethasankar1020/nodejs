@@ -12,4 +12,7 @@ router.route("/add/product").post(ProductController.createProductData);
 
 router.route("/add/wishlist").post(WishlistController.addWishlist)
 
+// get all product with pagnation
+router.route("/getallproduct/:page").get(ProductController.getAllProducts)
+
 module.exports = router;
