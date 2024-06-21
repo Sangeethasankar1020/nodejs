@@ -145,6 +145,19 @@ const getUsersByActiveStatus = async (isActive) => {
     throw error;
   }
 };
+// get user details by login using unwind
+
+// const loginUser = async () => {
+//   const user = await registerModel.findOne({ email, password })
+//   if (!user) {
+//     throw new Error("Invalid email or password");
+//   }
+//   return user;
+// };
+
+
+
+
 module.exports = {
   createUserDetails,
   getUsers,
@@ -152,5 +165,6 @@ module.exports = {
   deleteUser,
   getWishlistData,
   getActiveUsers,
-  getUsersByActiveStatus 
+  getUsersByActiveStatus,
+
 };

@@ -42,3 +42,7 @@ router.route("/active/users").get(userController.getActiveUsers)
 // get inactive users
 
 router.route("/inactive/users").get(userController.getUsersByActiveStatus)
+
+// get user details by login using unwind, group
+
+router.route("/details").get(userController.loginUser)
