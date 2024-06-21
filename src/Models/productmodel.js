@@ -47,10 +47,10 @@ const productSchema = new mongoose.Schema({
   qty: {
     type: Number,
   },
-  // using moment create product with date
+  // // using moment create product with date
   // createdDate: {
   //   type: String,
-  //   default:moment()
+  //   default:moment().todate()
   // }
   
   // using date fn

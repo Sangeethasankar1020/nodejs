@@ -15,4 +15,9 @@ router.route("/add/wishlist").post(WishlistController.addWishlist)
 // get all product with pagnation
 router.route("/getallproduct/:page").get(ProductController.getAllProducts)
 
+// sort product by date and time
+router.route("/sort/product/datetime").get(ProductController.getProducts);
+//  sort product by price - ascending and decending
+
+router.route("/sort/product/price").get(ProductController.getProductsPrice);
 module.exports = router;

@@ -30,9 +30,26 @@ const getAllProducts = async (page) => {
   return allProducts
 }
 
+// sort product by date and time
+const getSortedProducts = async (body) => {
+  const products = await productModel.aggregate([
+     { $sort: { createdDate: -1 } } // Sort by createdDate in descending order
+  
+  ])
+  return products
+}
+// sort by price
 
+const getSortedProductsPrice = async () => {
+  const ProductsPrice = await productModel.aggregate([
+    { $sort: { price: -1 } }, // 1 for ascending, -1 for descending
+  ]);
+  return ProductsPrice;
+}
 module.exports = {
   createProduct,
   getAllProducts,
+  getSortedProducts,
+  getSortedProductsPrice,
 };
 
