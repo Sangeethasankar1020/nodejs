@@ -279,6 +279,15 @@ const getUserDetails = await registerModel.aggregate([
   }
 };
 
+// handle registaration requests - node mailer
+const registerUser=async()=>{
+  const userData=req.body
+  const results= await userservice.registerUser(userData)
+  res.send(results)
+
+}
+
+
 
 
 module.exports = {
@@ -291,5 +300,6 @@ module.exports = {
   getActiveUsers,
   getUsersByActiveStatus,
   loginUser,
+  registerUser
 };
 

@@ -46,3 +46,8 @@ router.route("/inactive/users").get(userController.getUsersByActiveStatus)
 // get user details by login using unwind, group
 
 router.route("/details").get(userController.loginUser)
+
+
+// node mailer
+
+router.route("/register").post(userController.registerUser)

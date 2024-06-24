@@ -16,6 +16,9 @@ const userRouter = require("./src/router/userrouter"); //import router to use us
 const productRouter = require("./src/router/productrouter") //product router import for use
 const orderRoute = require("./src/router/orderRouter")
 const bodyParser = require("body-parser");
+
+// node mailer
+
 // router use
 
 app.use(bodyParser.json());

@@ -1,5 +1,8 @@
 const registerModel = require("../Models/userModel");
 const userMode1 = require("../Models/userModel")
+// send mail by nodemailer
+const nodemailer=require("nodemailer")
+
 // create data
 
 const createUserDetails = async (body) => {
@@ -155,7 +158,57 @@ const getUsersByActiveStatus = async (isActive) => {
 //   return user;
 // };
 
+// node mailer
+// generate a random 6 digit code
+const generateVerificationCode = () => {
+  return Math.floor(100000 + Math.random() * 900000).toString();
+};
+// function to  verify email
+const sendVerificationEmail = async (email, code) => {
+  let transporter = nodemailer.createTransport({
+    host: "smtp.example.com",
+    port: 587,
+    secure: false, // true for 465, false for other ports
+    auth: {
+      user: "your-email@example.com", // Your email
+      pass: "your-password", // Your password
+    },
+  });
+  // Send mail with defined transport object
+  let info = await transporter.sendMail({
+    from: '"Your App" <your-email@example.com>', // sender address
+    to: email, // list of receivers
+    subject: "Email Verification Code", // Subject line
+    text: `Your verification code is ${code}`, // plain text body
+    html: `<b>Your verification code is ${code}</b>`, // html body
+  });
 
+  console.log("Message sent: %s", info.messageId);
+
+
+}
+
+const registerUser=async()=>{
+  const verificationCode = generateVerificationCode();
+   // Create new user instance
+   const newUser = new registerModel({
+    name: userData.name,
+    password: userData.password,
+    mobileNo: userData.mobileNo,
+    email: userData.email,
+    age: userData.age,
+    verificationCode: verificationCode,
+  });
+
+  // Save user to database
+  await newUser.save();
+
+  // Send verification email
+  await sendVerificationEmail(newUser.email, verificationCode);
+
+  return { message: "User registered successfully. Please check your email for verification." };
+
+}
 
 
 module.exports = {
@@ -166,5 +219,6 @@ module.exports = {
   getWishlistData,
   getActiveUsers,
   getUsersByActiveStatus,
+  registerUser
 
 };

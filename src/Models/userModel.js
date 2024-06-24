@@ -31,6 +31,7 @@ const registerSchema = new mongoose.Schema({
   email: {
     type: String,
     required:true,
+    unique:true,
   },
   age: {
     type: Number,
@@ -39,6 +40,14 @@ const registerSchema = new mongoose.Schema({
     type: Boolean,
     default: true,
   },
+
+  // to verify code - send mail
+  
+  verificationCode:{
+    type:String,
+    default:null,
+  },
+
 });
 
 // to save password in hash value
