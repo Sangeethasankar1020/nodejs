@@ -31,7 +31,7 @@ const getAllProducts = async (page) => {
 }
 
 // sort product by date and time
-const getSortedProducts = async (body) => {
+const getSortedProducts = async () => {
   const products = await productModel.aggregate([
      { $sort: { createdDate: -1 } } // Sort by createdDate in descending order
   
@@ -46,10 +46,21 @@ const getSortedProductsPrice = async () => {
   ]);
   return ProductsPrice;
 }
+
+// add one field in all product using update many
+
+const updateFieldInAllProducts = async (field, value) => {
+  const update = {}
+  update[field] = value
+ const results= await productModel.updateMany({},{$set:update})
+return results
+}
+
 module.exports = {
   createProduct,
   getAllProducts,
   getSortedProducts,
   getSortedProductsPrice,
+  updateFieldInAllProducts,
 };
 

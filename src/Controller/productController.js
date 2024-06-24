@@ -31,9 +31,16 @@ const getProductsPrice = async (req, res) => {
   const getProductsPrice=await productServices.getSortedProductsPrice(req.body)
   res.send(getProductsPrice);
 }
+// add one field in all product using update many
+const updateField = async (req, res) => {
+   const { field, value } = req.body;
+  const results= await productServices.updateFieldInAllProducts(field, value);
+}
+
 module.exports = {
   createProductData,
   getAllProducts,
   getProducts,
   getProductsPrice,
+  updateField,
 };
