@@ -24,6 +24,9 @@ router.route("/sort/product/price").get(ProductController.getProductsPrice);
 // add one field in all product using update many 
 router.route("/update/all/field").put(ProductController.updateField)
 
+// sort a product by price range
+router.route("/sort/product/price/range").get(ProductController.getProductsByPriceRange)
+
 module.exports = router;
 
 

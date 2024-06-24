@@ -49,11 +49,19 @@ const getSortedProductsPrice = async () => {
 
 // add one field in all product using update many
 
-const updateFieldInAllProducts = async (field, value) => {
-  const update = {}
-  update[field] = value
- const results= await productModel.updateMany({},{$set:update})
+const updateFieldInAllProducts = async (filter,update) => {
+ const results= await productModel.updateMany(filter,{$set:update })
 return results
+}
+
+// get product by product price range
+
+
+const getProductsByPriceRange=async(minPrice,maxPrice)=>{
+  const products=await productModel.find({
+      price: { $gte: minPrice, $lte: maxPrice }
+    }).sort({ price: 1 }); // Sort by price ascending
+  return products;
 }
 
 module.exports = {
@@ -62,5 +70,6 @@ module.exports = {
   getSortedProducts,
   getSortedProductsPrice,
   updateFieldInAllProducts,
+  getProductsByPriceRange
 };
 

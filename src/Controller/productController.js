@@ -33,9 +33,18 @@ const getProductsPrice = async (req, res) => {
 }
 // add one field in all product using update many
 const updateField = async (req, res) => {
-   const { field, value } = req.body;
-  const results= await productServices.updateFieldInAllProducts(field, value);
+   const { filter, update } = req.body;
+  const results= await productServices.updateFieldInAllProducts(filter,update);
+  res.send(results)
 }
+// sort a product by price range
+const getProductsByPriceRange=async(req,res)=>{
+   const {minPrice,maxPrice}=req.query
+   const products=await productServices.getProductsByPriceRange(Number(minPrice), Number(maxPrice))
+   res.send(products)
+}
+
+
 
 module.exports = {
   createProductData,
@@ -43,4 +52,5 @@ module.exports = {
   getProducts,
   getProductsPrice,
   updateField,
+  getProductsByPriceRange
 };
