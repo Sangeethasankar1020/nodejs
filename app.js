@@ -13,8 +13,8 @@ const app = express();
 const db = require("./src/database/db");
 const userRouter = require("./src/router/userrouter"); //import router to use user
 
-const productRouter=require("./src/router/productrouter") //product router import for use
-const orderRoute=require("./src/router/orderRouter")
+const productRouter = require("./src/router/productrouter") //product router import for use
+const orderRoute = require("./src/router/orderRouter")
 const bodyParser = require("body-parser");
 // router use
 
@@ -22,17 +22,21 @@ app.use(bodyParser.json());
 app.use("/user", userRouter); //parent api for user registers
 // product router to use
 
-app.use("/product",productRouter)  //changing product route as parent for product 
+app.use("/product", productRouter)  //changing product route as parent for product 
+
 
 // order
-app.use("/order",orderRoute)
+app.use("/order", orderRoute)
 // data base
 db.on("open", () => {
-  app.listen(3000),
-    () => {
-      console.log("server working");
-    };
+  app.listen(3000, () => {
+    console.log("http://localhost:3000/");
+  })
+
 });
+app.get("/", (req, res) => {
+  res.send("im connected to server")
+})
 
 db.on("error", () => {
   console.log("error db");
