@@ -50,4 +50,4 @@ router.route("/details").get(userController.loginUser)
 
 // node mailer
 
-router.route("/register").post(userController.registerUser)
+router.route("/register/auth").post(userController.registerUser)

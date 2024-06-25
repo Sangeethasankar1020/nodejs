@@ -1,5 +1,7 @@
 const registerModel = require("../Models/userModel");
 const userMode1 = require("../Models/userModel")
+
+const otpModel=require("../Models/otpModel")
 // send mail by nodemailer
 const nodemailer=require("nodemailer")
 
@@ -163,51 +165,17 @@ const getUsersByActiveStatus = async (isActive) => {
 const generateVerificationCode = () => {
   return Math.floor(100000 + Math.random() * 900000).toString();
 };
-// function to  verify email
-const sendVerificationEmail = async (email, code) => {
-  let transporter = nodemailer.createTransport({
-    host: "smtp.example.com",
-    port: 587,
-    secure: false, // true for 465, false for other ports
-    auth: {
-      user: "sangeethaproject01@gmail.com", // Your email
-      pass: "yipl yqzv rzfv hpuh", // Your password
-    },
-  });
-  // Send mail with defined transport object
-  let info = await transporter.sendMail({
-    from: '"Your App" <sangeetha11042001@gmail.com>', // sender address
-    to: email, // list of receivers
-    subject: "Email Verification Code", // Subject line
-    text: `Your verification code is ${code}`, // plain text body
-    // html: `<b>Your verification code is ${code}</b>`, // html body
-  });
-
-  console.log("Message sent: %s", info.messageId);
 
 
-}
-
-const registerUser=async()=>{
-  const verificationCode = generateVerificationCode();
-   // Create new user instance
-   const newUser = new registerModel({
-    name: userData.name,
-    password: userData.password,
-    mobileNo: userData.mobileNo,
-    email: userData.email,
-    age: userData.age,
-    verificationCode: verificationCode,
-  });
-
-  // Save user to database
-  await newUser.save();
-
-  // Send verification email
-  await sendVerificationEmail(newUser.email, verificationCode);
-
-  return { message: "User registered successfully. Please check your email for verification." };
-
+const registerUser=async(userData)=>{
+  const newUser = new otpModel({
+    ...userData,
+    password: hashedPassword,
+    verificationCode:generateVerificationCode()
+  })
+  await newUser.save()
+  return newUser
+ 
 }
 
 

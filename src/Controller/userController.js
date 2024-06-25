@@ -280,11 +280,45 @@ const getUserDetails = await registerModel.aggregate([
 };
 
 // handle registaration requests - node mailer
-const registerUser=async()=>{
-  const userData=req.body
-  const results= await userservice.registerUser(userData)
-  res.send(results)
 
+// function to  verify email
+const sendVerificationEmail = async (email, code) => {
+  let transporter = nodemailer.createTransport({
+    host: "smtp.example.com",
+    port: 587,
+    secure: false, // true for 465, false for other ports
+    auth: {
+      user: "sangeethaproject01@gmail.com", // Your email
+      pass: "psit lndi ctkt fgaz", // Your password
+    },
+  });
+  // Send mail with defined transport object
+  let info = await transporter.sendMail({
+    from: '"Your App" <sangeethaproject01@gmail.com>', // sender address
+    to: email, // list of receivers
+    subject: "Email Verification Code", // Subject line
+    text: `Your verification code is ${code}`, // plain text body
+    // html: `<b>Your verification code is ${code}</b>`, // html body
+  });
+
+  console.log("Message sent: %s", info.messageId);
+
+}
+
+
+const registerUser = async (req,res) => {
+  try {
+    const userData = req.body
+    const newUser = await userservice.registerUser(userData)
+    // send verification mail
+    const mailSend = await sendVerificationEmail(newUser.email, newUser.sendVerificationEmail)
+    res.send({
+      message:
+        "user registered successfully.Please check your email for verification. ",
+    });
+  } catch (error) {
+    res.send({message:"error registering user",error})
+  }
 }
 
 

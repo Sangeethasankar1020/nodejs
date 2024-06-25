@@ -1,5 +1,3 @@
-// schema creation - user information
-
 const mongoose = require("mongoose");
 
 // for unique id - convert object id - import
@@ -8,8 +6,6 @@ const { v4: uuidv4 } = require("uuid");
 
 // to save password in hash values
 
-const bcrypt=require("bcryptjs")
-
 const registerSchema = new mongoose.Schema({
   // we have to write logic to convert also
 
@@ -17,29 +13,18 @@ const registerSchema = new mongoose.Schema({
     type: String,
     default: uuidv4,
   },
-  name: {
-    type: String,
-    required: true,
-  },
+  
   password: {
     type: String,
     required: true,
   },
-  mobileNo: {
-    type: Number,
-  },
+  
   email: {
     type: String,
     required: true,
     unique: true,
   },
-  age: {
-    type: Number,
-  },
-  active: {
-    type: Boolean,
-    default: true,
-  },
+  
 
   // to verify code - send mail
 
@@ -48,12 +33,9 @@ const registerSchema = new mongoose.Schema({
     default: null,
   },
 
-  // to verify
-  isVerified: {
-    type: Boolean,
-    default: false
-  },
+ 
 });
+
 
 // to save password in hash value
 
@@ -68,5 +50,5 @@ registerSchema.pre("save", async function (next) {
   } 
 );
 
-const registerModel = mongoose.model("register", registerSchema);
-module.exports = registerModel;
+const otpModel = mongoose.model("registerauth", registerSchema);
+module.exports = otpModel;
