@@ -170,17 +170,17 @@ const sendVerificationEmail = async (email, code) => {
     port: 587,
     secure: false, // true for 465, false for other ports
     auth: {
-      user: "your-email@example.com", // Your email
-      pass: "your-password", // Your password
+      user: "sangeethaproject01@gmail.com", // Your email
+      pass: "yipl yqzv rzfv hpuh", // Your password
     },
   });
   // Send mail with defined transport object
   let info = await transporter.sendMail({
-    from: '"Your App" <your-email@example.com>', // sender address
+    from: '"Your App" <sangeetha11042001@gmail.com>', // sender address
     to: email, // list of receivers
     subject: "Email Verification Code", // Subject line
     text: `Your verification code is ${code}`, // plain text body
-    html: `<b>Your verification code is ${code}</b>`, // html body
+    // html: `<b>Your verification code is ${code}</b>`, // html body
   });
 
   console.log("Message sent: %s", info.messageId);
