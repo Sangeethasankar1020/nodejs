@@ -5,7 +5,7 @@ const mongoose = require("mongoose");
 const { v4: uuidv4 } = require("uuid");
 
 // to save password in hash values
-
+const bcrypt = require("bcryptjs")
 const registerSchema = new mongoose.Schema({
   // we have to write logic to convert also
 
@@ -39,7 +39,13 @@ const registerSchema = new mongoose.Schema({
 
 // to save password in hash value
 
-
+registerSchema.pre("save", async function (next) {
+  if (!this.isModified("password")) {
+    return next();
+  }
+  this.password = await bcrypt.hash(this.password, 10);
+  next();
+});
 
 const otpModel = mongoose.model("registerauth", registerSchema);
 module.exports = otpModel;

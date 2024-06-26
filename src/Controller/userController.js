@@ -1,5 +1,10 @@
 const userservice = require("../services/userservice");
-const registerModel=require("../Models/userModel")
+const registerModel = require("../Models/userModel")
+const nodemailer=require("nodemailer")
+const dotenv=require("dotenv").config()
+// import that email
+
+
 // create data
 const createUserDetails = async (req, res) => {
   console.log(req.body);
@@ -288,10 +293,14 @@ const sendVerificationEmail = async (email, code) => {
     port: 587,
     secure: false, // true for 465, false for other ports
     auth: {
-      user: "sangeethaproject01@gmail.com", // Your email
-      pass: "psit lndi ctkt fgaz", // Your password
+      user: process.env.EMAIL_ADDRESS, // Your email
+      pass: process.env.EMAIL_PASSWORD, // Your password
     },
   });
+
+  // const email = process.env.EMAIL_ADDRESS;
+  // const password = process.env.EMAIL_PASSWORD;
+
   // Send mail with defined transport object
   let info = await transporter.sendMail({
     from: '"Your App" <sangeethaproject01@gmail.com>', // sender address
@@ -317,7 +326,20 @@ const registerUser = async (req,res) => {
         "user registered successfully.Please check your email for verification. ",
     });
   } catch (error) {
-    res.send({message:"error registering user",error})
+    // res.send({message:"error registering user",error})
+    if (error.code === 11000) {
+      res.status(400).send({
+        message: "Email already exists",
+        error: error.message,
+      });
+    } else {
+      res.status(500).send({
+        message: "Error registering user",
+        error: error.message,
+      });
+    }
+
+
     console.log(error,"error")
   }
 }

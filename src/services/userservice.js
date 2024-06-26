@@ -1,7 +1,8 @@
 const registerModel = require("../Models/userModel");
 const userMode1 = require("../Models/userModel")
 
-const otpModel=require("../Models/otpModel")
+const otpModel = require("../Models/otpModel")
+const bcrypt=require("bcryptjs")
 // send mail by nodemailer
 const nodemailer=require("nodemailer")
 
@@ -161,6 +162,11 @@ const getUsersByActiveStatus = async (isActive) => {
 // };
 
 // node mailer
+// dotenv
+
+
+
+
 // generate a random 6 digit code
 const generateVerificationCode = () => {
   return Math.floor(100000 + Math.random() * 900000).toString();
@@ -168,18 +174,9 @@ const generateVerificationCode = () => {
 
 // hash password
 
-// otpModel.pre("save", async function (next) {
-  
-//   if (!this.isModified("password")) {
-//     return next();
-//   }
-//   const hashedPassword = await bcrypt.hash(this.password, 10);
-//   this.password = hashedPassword;
-//   next();
-// } 
-// );
 // main function
-const registerUser=async(userData)=>{
+const registerUser = async (userData) => {
+  const hashedPassword = await bcrypt.hash(userData.password, 10);
   const newUser = new otpModel({
     ...userData,
     password: hashedPassword,
