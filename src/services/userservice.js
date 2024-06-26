@@ -166,7 +166,19 @@ const generateVerificationCode = () => {
   return Math.floor(100000 + Math.random() * 900000).toString();
 };
 
+// hash password
 
+// otpModel.pre("save", async function (next) {
+  
+//   if (!this.isModified("password")) {
+//     return next();
+//   }
+//   const hashedPassword = await bcrypt.hash(this.password, 10);
+//   this.password = hashedPassword;
+//   next();
+// } 
+// );
+// main function
 const registerUser=async(userData)=>{
   const newUser = new otpModel({
     ...userData,
@@ -187,6 +199,7 @@ module.exports = {
   getWishlistData,
   getActiveUsers,
   getUsersByActiveStatus,
-  registerUser
+  registerUser,
+  generateVerificationCode
 
 };

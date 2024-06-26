@@ -318,6 +318,7 @@ const registerUser = async (req,res) => {
     });
   } catch (error) {
     res.send({message:"error registering user",error})
+    console.log(error,"error")
   }
 }
 
@@ -334,6 +335,9 @@ module.exports = {
   getActiveUsers,
   getUsersByActiveStatus,
   loginUser,
-  registerUser
+  registerUser,
+  sendVerificationEmail,
+
+
 };
 

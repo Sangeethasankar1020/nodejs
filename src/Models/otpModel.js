@@ -39,16 +39,7 @@ const registerSchema = new mongoose.Schema({
 
 // to save password in hash value
 
-registerSchema.pre("save", async function (next) {
-  
-    if (!this.isModified("password")) {
-      return next();
-    }
-    const hashedPassword = await bcrypt.hash(this.password, 10);
-    this.password = hashedPassword;
-    next();
-  } 
-);
+
 
 const otpModel = mongoose.model("registerauth", registerSchema);
 module.exports = otpModel;
