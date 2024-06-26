@@ -12,7 +12,7 @@ const registerSchema = new mongoose.Schema({
   _id: {
     type: String,
     default: uuidv4,
-  },
+  }, 
   
   password: {
     type: String,
