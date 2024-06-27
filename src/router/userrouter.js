@@ -44,8 +44,11 @@ router.route("/active/users").get(userController.getActiveUsers)
 router.route("/inactive/users").get(userController.getUsersByActiveStatus)
 
 // get user details by login using unwind, group
-
+// jwt token save
 router.route("/details").get(userController.loginUser)
+
+// get user details by token and user id by headers
+router.route("/getUserByToken").get(userController.getUserByToken);
 
 
 // node mailer
