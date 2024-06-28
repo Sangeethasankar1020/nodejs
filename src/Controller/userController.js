@@ -72,7 +72,7 @@ const getUsersByActiveStatus = async (req, res) => {
 
 const loginUser = async (req, res) => {
   const { name, password } = req.body;
-  const checkData = await registerModel.find({name,password });
+  const checkData = await registerModel.findOne({name,password });
   console.log(checkData);
   if (!checkData) {
     return res
@@ -309,11 +309,13 @@ const loginUser = async (req, res) => {
 
 const getUserByToken = async (req, res) => {
   const token = req.headers["token"];
-
+  console.log("Received token:", token);
   try {
     const User = await userservice.getUserByToken(token)
+    console.log("User retrieved:", User);
     res.status(200).send(User)
   } catch (error) {
+    console.error("Error occurred:", error)
     if (error.message === 'token  is requred') {
       return res.status(400).send(User)
     } else if (error.message === 'User not found') {

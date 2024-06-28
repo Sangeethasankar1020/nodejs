@@ -192,13 +192,21 @@ const registerUser = async (userData) => {
 
 const getUserByToken = async (token) => {
   if (!token) {
+    console.error("Token is required");
     throw new Error("token is required")
   }
-  const user = await registerModel.findOne({ token: token })
-  if (!user) {
-    throw new Error("User not found")
-  }
-  return user
+  const tokenData = await tokenModel.findOne({token:token })
+  // if (!tokenData) {
+  //   console.error("Token not found in tokenModel");
+  //   throw new Error("User not found")
+  // }
+  // const userId=tokenData.userId
+  // const user = await registerModel.findById(userId)
+  // if(!user){
+  //   console.error("User not found in registerModel");
+  //   throw new Error ("user not found")
+  // }
+  return tokenData
 }
 
 
