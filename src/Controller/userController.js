@@ -72,17 +72,14 @@ const getUsersByActiveStatus = async (req, res) => {
 
 const loginUser = async (req, res) => {
   const { name, password } = req.body;
-  const checkData = await registerModel.findOne({
-    name: name,
-    password: password,
-  });
+  const checkData = await registerModel.find({name,password });
+  console.log(checkData);
   if (!checkData) {
     return res
       .status(401)
       .json({ message: "Login failed. Invalid credentials." });
   }
   // to create a token
-  else {
     const payload = {
       userDetails: checkData,
     };
@@ -102,7 +99,7 @@ const loginUser = async (req, res) => {
       token: token,
       message: "user login succesfully",
     });
-  }
+  
   // const getUserDetails = await registerModel.aggregate([
   //   {
   //     $match: { _id: userId },
@@ -311,33 +308,49 @@ const loginUser = async (req, res) => {
 // get details by token and user id using headers
 
 const getUserByToken = async (req, res) => {
+  const token = req.headers["token"];
+
   try {
-    const token = req.headers['authorization'];
-    const userId = req.headers['user-id'];
-
-    if (!token || !userId) {
-      return res.status(400).json({ message: "Token and user ID are required" });
-    }
-
-    const foundToken = await tokenModel.findOne({ token, userId });
-
-    if (!foundToken) {
-      return res.status(401).json({ message: "Invalid token or user ID" });
-    }
-
-    const userDetails = await registerModel.findById(userId);
-
-    if (!userDetails) {
-      return res.status(404).json({ message: "User not found" });
-    }
-
-    res.status(200).json({ userDetails });
+    const User = await userservice.getUserByToken(token)
+    res.status(200).send(User)
   } catch (error) {
-    res.status(500).json({ message: "Server error", error });
+    if (error.message === 'token  is requred') {
+      return res.status(400).send(User)
+    } else if (error.message === 'User not found') {
+      return res.status(404).send(error.message)
+    } else {
+      return res.status(500).send('Internal Server Error')
+    }
   }
-};
 
 
+  //   try {
+    
+  //     // const userId = req.headers['user-id'];
+
+  //     if (!token) {
+  //       return res.status(400).json({ message: "Token and user ID are required" });
+  //     }
+
+  //     const foundToken = await tokenModel.findOne({ token:token });
+
+  //     if (!foundToken) {
+  //       return res.status(401).json({ message: "Invalid token or user ID" });
+  //     }
+
+  //     const userDetails = await registerModel.findById(userId);
+
+  //     if (!userDetails) {
+  //       return res.status(404).json({ message: "User not found" });
+  //     }
+
+  //     res.status(200).json({ userDetails });
+  //   } catch (error) {
+  //     res.status(500).json({ message: "Server error", error });
+  //   }
+  // };
+
+}
 
 
 

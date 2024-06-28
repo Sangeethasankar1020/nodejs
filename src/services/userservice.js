@@ -4,7 +4,8 @@ const userMode1 = require("../Models/userModel")
 const otpModel = require("../Models/otpModel")
 const bcrypt=require("bcryptjs")
 // send mail by nodemailer
-const nodemailer=require("nodemailer")
+const nodemailer=require("nodemailer");
+const tokenModel = require("../Models/tokenModel");
 
 // create data
 
@@ -187,6 +188,20 @@ const registerUser = async (userData) => {
  
 }
 
+// get user by token
+
+const getUserByToken = async (token) => {
+  if (!token) {
+    throw new Error("token is required")
+  }
+  const user = await registerModel.findOne({ token: token })
+  if (!user) {
+    throw new Error("User not found")
+  }
+  return user
+}
+
+
 
 module.exports = {
   createUserDetails,
@@ -197,6 +212,6 @@ module.exports = {
   getActiveUsers,
   getUsersByActiveStatus,
   registerUser,
-  generateVerificationCode
-
+  generateVerificationCode,
+  getUserByToken,
 };

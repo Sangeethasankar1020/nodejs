@@ -47,6 +47,12 @@ router.route("/inactive/users").get(userController.getUsersByActiveStatus)
 // jwt token save
 router.route("/details").get(userController.loginUser)
 
+// jwt token creation
+
+router.route("/login/jwt").post(userController.loginUser)
+
+
+
 // get user details by token and user id by headers
 router.route("/getUserByToken").get(userController.getUserByToken);
 
